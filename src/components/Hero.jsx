@@ -3,7 +3,7 @@ import { HeroImg } from "../assets";
 
 const Hero = () => {
   return (
-    <div className="grid grid-cols-3 rounded-[50px] border-primary border-2 mt-10">
+    <div className="grid grid-cols-3 rounded-[50px] border-primary border-2 mt-10 container mx-auto overflow-hidden h-[600px]">
       <div className="flex items-center justify-end">
         <h2 className="text-primary text-[54px]">Новая</h2>
       </div>
@@ -12,9 +12,9 @@ const Hero = () => {
           <h2 className="text-white inline-block text-[54px]">колекция</h2>
           <a 
             href="#"
-            className="text-[#E0BEA2]  h-0 border-b-[1px] self-end border-[#E0BEA2]"
+            className="text-[#E0BEA2]  h-0 border-b-[1px] self-end border-[#E0BEA2] mr-4"
           >
-            Смотреть новинки{" "}
+            Смотреть новинки
             <i className="fa fa-chevron-right ms-2 text-xs"></i>
           </a>
         </div>

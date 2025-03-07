@@ -1,5 +1,6 @@
 import React from "react";
 import { HeaderLogo } from "../assets";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="mx-auto container flex justify-between items-center py-3 px-4 border-b-2 border-[#750000] ">
@@ -17,9 +18,9 @@ const Header = () => {
           <i className="fa me-2 fa-cart-shopping text-primary text-2xl"></i>
           <span></span>
         </a>
-        <a href="/">
-          <i className="fa-regular me-2 fa-heart text-primary text-2xl"></i>
-        </a>
+        <Link to="/Favorite">
+          <i className="fa-regular me-2 fa-heart  text-primary text-2xl hover:bg-primary"></i>
+        </Link>
         <a href="">
           <i className="fa-regular me-2 fa-user text-primary text-2xl"></i>
         </a>

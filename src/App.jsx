@@ -1,24 +1,59 @@
-import { useDispatch, useSelector } from 'react-redux'
-import './App.css'
-import Hero from './components/Hero'
-import Home from './components/Home'
-import { decrement, increment, random } from '../lib/slice/counterSlice'
+import Home from "./components/Home";
+import Header from "./components/Header";
+import Filter from "./components/Filter";
+import { useEffect } from "react";
+import {
+  addCart,
+  addProducts,
+  setCart,
+  setError,
+  setLoading,
+} from "./lib/slice/productsSlice";
+import productService from "./service/product";
+import { useDispatch, useSelector } from "react-redux";
+import Favorites from "./components/Favorites";
+import { Route, Routes } from "react-router-dom";
+import { getFromLocal, setToLocal } from "./lib/localConfig";
 
 function App() {
-  let randomNum = Math.random() * 100 | 0
-  const dispatch = useDispatch()
-  const {value} = useSelector(state => state.counter)
+  const dispatch = useDispatch();
+  const { cartList } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    const getProducts = async () => {
+      dispatch(setLoading(true));
+      dispatch(setError(null));
+      try {
+        const { data } = await productService.getAll();
+        dispatch(addProducts(data));
+      } catch (error) {
+        dispatch(setError(error.message));
+      } finally {
+        dispatch(setLoading(false));
+      }
+    };
+    getProducts();
+
+    const storedCartList = getFromLocal("cartList");
+    if (storedCartList) {
+      dispatch(setCart(storedCartList));
+    }
+  }, []);
+
+  useEffect(() => {
+      setToLocal("cartList", cartList);
+  }, [cartList]);
+
   return (
     <div className="App">
-      <Home />
-      <Hero />
-
-      <h3>{value}</h3>
-      <button onClick={() => {dispatch(increment())}}>+</button>
-      <button onClick={() => {dispatch(decrement())}}>-</button>
-      <button onClick={() => {dispatch(random(randomNum))}}>random</button>
+      <Header />
+      <Routes>
+        <Route path="/filter/:q" element={<Filter />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/favorite" element={<Favorites />} />
+      </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
